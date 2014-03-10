@@ -10,7 +10,7 @@ class TogglCLI < Thor
   desc 'today PROJECT_NAME', 'enter 8 hours on PROJECT_NAME for today'
   def today(project_name)
     if project = find_project(project_name)
-      puts @@toggl.create_time_entry(
+      ap @@toggl.create_time_entry(
         description: "development",
         duration: 25200,
         start: today_at_10am.localtime.iso8601,
@@ -40,7 +40,7 @@ class TogglCLI < Thor
       entries = @@toggl.get_time_entries(search_start, search_end)
 
       if !is_weekend && entries.empty?
-        puts @@toggl.create_time_entry(
+        ap @@toggl.create_time_entry(
           description: "development",
           duration: 25200,
           start: entry_date.localtime.iso8601,
