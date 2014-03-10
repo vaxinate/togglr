@@ -3,6 +3,11 @@ Togglr
 
 Togglr is a CLI client for togglr.com. Uses the [TogglV8 library by Tom Kane](https://github.com/kanet77/togglv8)
 
+Installation
+============
+Run the installer script:
+```bin/installer.sh```
+
 
 Commands
 ========
