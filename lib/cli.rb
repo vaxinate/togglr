@@ -1,9 +1,11 @@
 require 'awesome_print'
 require 'thor'
+require 'yaml'
 require_relative 'togglV8'
 
 class TogglCLI < Thor
-  @@toggl = Toggl.new('adam@revelry.co', 'b0bd0Le!')
+  @@config = YAML.load_file("#{File.dirname(__FILE__)}/../config.yml")
+  @@toggl = Toggl.new(@@config['toggl_user'], @@config['toggl_pass'])
 
   desc 'today PROJECT_NAME', 'enter 8 hours on PROJECT_NAME for today'
   def today(project_name)
@@ -11,7 +13,7 @@ class TogglCLI < Thor
       puts @@toggl.create_time_entry(
         description: "development",
         duration: 25200,
-        start: today_at_10_am,
+        start: today_at_10am.localtime.iso8601,
         pid: project['id'],
         created_with: 'togglr cli!'
       )
