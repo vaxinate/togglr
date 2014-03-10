@@ -20,7 +20,7 @@ class TogglCLI < Thor
     end
   end
 
-  desc 'backfill PROJECT_NAME END_DATE', 'backfill hours on PROJECT_NAME from today to END_DATE'
+  desc 'backfill PROJECT_NAME END_DATE', 'backfill hours on PROJECT_NAME from today to END_DATE (weekends excluded)'
   def backfill(project_name, end_date)
     project = find_project(project_name)
     if project.nil?

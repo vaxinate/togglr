@@ -14,9 +14,9 @@ bin/installer.sh
 Commands
 ========
 ```
-  togglr backfill PROJECT_NAME END_DATE  # backfill hours on PROJECT_NAME from today to END_DATE
-  togglr today PROJECT_NAME              # enter 8 hours on PROJECT_NAME for today
+  togglr backfill PROJECT_NAME END_DATE  # backfill hours on PROJECT_NAME from today to END_DATE (weekends excluded)
   togglr help [COMMAND]                  # Describe available commands or one specific command
+  togglr today PROJECT_NAME              # enter 8 hours on PROJECT_NAME for today
 ```
 
 License
