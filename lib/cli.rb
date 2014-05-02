@@ -38,23 +38,28 @@ class TogglCLI < Thor
   end
 
   desc 'backfill PROJECT_NAME END_DATE', 'backfill hours on PROJECT_NAME from today to END_DATE (weekends excluded)'
+  option :skip
+  option :start
   def backfill(project_name, end_date)
     project = find_project(project_name)
     if project.nil?
       puts "couldn't find project matching #{project_name}" and return
     end
 
-    entry_date = today_at_10am
+    entry_date = options[:start] ? date_at_10am(Date.parse(options[:start])) : today_at_10am 
     end_date = Date.parse(end_date).to_time
+
+    skip_days = options[:skip] ? options[:skip].downcase.split(' ') : []
 
     while entry_date >= end_date do
       is_weekend = entry_date.saturday? || entry_date.sunday?
+      is_skip_day = skip_days.include? entry_date.strftime('%A').downcase
 
       search_start = Time.new(entry_date.year, entry_date.month, entry_date.day, 0, 0, 0)
       search_end  = Time.new(entry_date.year, entry_date.month, entry_date.day, 24, 0, 0)
       entries = @@toggl.get_time_entries(search_start, search_end)
 
-      if !is_weekend && entries.empty?
+      if !is_weekend && !is_skip_day && entries.empty?
         ap @@toggl.create_time_entry(
           description: "development",
           duration: 25200,
@@ -79,6 +84,10 @@ class TogglCLI < Thor
 
     def today_at_10am
       Time.new(Time.now.year, Time.now.month, Time.now.day, 10, 0, 0)
+    end
+
+    def date_at_10am(date)
+      Time.new(date.year, date.month, date.day, 10, 0, 0)
     end
   end
 end
