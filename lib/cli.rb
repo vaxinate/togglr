@@ -22,6 +22,21 @@ class TogglCLI < Thor
     end
   end
 
+  desc 'entry PROJECT_NAME NUM_HOURS ENTRY_DATE', 'enter NUM_HOURS hours on PROJECT_NAME for ENTRY_DATE'
+  def today(project_name, num_hours, entry_date)
+    if project = find_project(project_name)
+      ap @@toggl.create_time_entry(
+        description: "development",
+        duration: num_hours * 3600,
+        start: today_at_10am.localtime.iso8601,
+        pid: project['id'],
+        created_with: 'togglr cli!'
+      )
+    else
+      puts "couldn't find project matching #{project_name}"
+    end
+  end
+
   desc 'backfill PROJECT_NAME END_DATE', 'backfill hours on PROJECT_NAME from today to END_DATE (weekends excluded)'
   def backfill(project_name, end_date)
     project = find_project(project_name)
