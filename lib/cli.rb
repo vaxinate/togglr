@@ -1,6 +1,7 @@
 require 'awesome_print'
 require 'thor'
 require 'yaml'
+require 'time'
 require_relative 'togglV8'
 
 class TogglCLI < Thor
