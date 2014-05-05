@@ -23,7 +23,7 @@ class TogglCLI < Thor
   end
 
   desc 'entry PROJECT_NAME NUM_HOURS ENTRY_DATE', 'enter NUM_HOURS hours on PROJECT_NAME for ENTRY_DATE'
-  def today(project_name, num_hours, entry_date)
+  def entry(project_name, num_hours, entry_date)
     if project = find_project(project_name)
       ap @@toggl.create_time_entry(
         description: "development",
